@@ -9,4 +9,10 @@ class JobCreate(BaseModel):
     location:str
     salary:Optional[float]=None
     status:str="Applied"
+class JobUpdate(BaseModel):
+    company: Optional[str] = None
+    position: Optional[str] = None
+    location: Optional[str] = None
+    salary: Optional[float] = None
+    status: Optional[str] = None
    
