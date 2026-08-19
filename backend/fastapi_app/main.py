@@ -1,9 +1,13 @@
 from fastapi import FastAPI ,Depends,HTTPException
 from sqlalchemy.orm import Session
 from fastapi_app.schemas.jobs import JobCreate,JobUpdate
+from fastapi_app.schemas.user import UserCreate,Token,UserLogin
 from fastapi_app.models.jobs import JobApplication
-from .database import Base,engine,SessionLocal
+from fastapi_app.database import Base,engine,SessionLocal
 from fastapi import status
+from fastapi_app.models.user import User
+from fastapi_app.auths.utils import hash_password,verify_password
+from fastapi_app.auths.security import create_access_token
 
 
 app = FastAPI(
@@ -111,4 +115,60 @@ def delete_job(
     db.commit()
 
     return None
+@app.post("/api/auth/register", status_code=201)
+def register_user(
+    user_data: UserCreate,
+    db: Session = Depends(get_db)
+):
+    existing_user = db.query(User).filter(
+        User.email == user_data.email
+    ).first()
 
+    if existing_user:
+        raise HTTPException(
+            status_code=400,
+            detail="Email is already registered"
+        )
+
+    hashed_password = hash_password(user_data.password)
+
+    new_user = User(
+        name=user_data.name,
+        email=user_data.email,
+        password_hash=hashed_password
+    )
+
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return new_user
+
+@app.post("/api/auth/login",response_model=Token)
+def login_user(
+    user_data:UserLogin,
+    db:Session=Depends(get_db)
+):
+    user=db.query(User).filter(
+        User.email==user_data.email
+    ).first()
+
+    if user is None:
+        raise HTTPException(
+             status_code=401,
+            detail="Invalid email or password"
+        )
+    password_valid= verify_password(
+        user_data.password,
+        user.password_hash
+    )
+    if not password_valid:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+    access_token=create_access_token(user.id)
+    return {
+        "access_token":access_token,
+        "token_type":"bearer"
+    }
