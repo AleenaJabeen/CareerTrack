@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
+import { ChevronLeft } from "lucide-react"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -59,7 +60,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-900/50  p-4">
+      <Link href="/" className="flex items-center justify-start gap-2 text-white p-4">
+        <ChevronLeft className="font-bold text-xl" />
+        <span className="text-xl">
+          Go to Home
+        </span>
+      </Link>
+      <div className="flex items-center justify-center py-8 ">
       <form
         onSubmit={handleSignup}
         className="w-full max-w-sm rounded-lg border p-6 shadow-md flex flex-col gap-4"
@@ -135,6 +143,7 @@ export default function SignupPage() {
           </Link>
         </p>
       </form>
+      </div>
     </div>
   )
 }
