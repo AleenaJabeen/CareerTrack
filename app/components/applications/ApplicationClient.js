@@ -80,9 +80,9 @@ export default function ApplicationsClient({
 
           <button
             onClick={() => setShowForm(true)}
-            className="rounded-lg bg-teal-600 px-5 py-3 text-white"
+            className="rounded-lg bg-teal-600 cursor-pointer px-5 py-3 text-white"
           >
-            + Add Application
+             Add Application
           </button>
         </div>
 
@@ -93,13 +93,13 @@ export default function ApplicationsClient({
             placeholder="Search by company or position..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 rounded-lg bg-slate-600 px-4 py-3"
+            className="flex-1 rounded-lg bg-slate-600 px-4 py-3 focus:outline-none"
           />
-
+<div className="flex items-center justify-center rounded-lg bg-teal-600 pe-2">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded-lg border bg-teal-600 px-4 py-3"
+            className="rounded-lg bg-teal-600 px-4 py-2 focus:outline-none"
           >
             <option value="All">All Statuses</option>
             <option value="Applied">Applied</option>
@@ -107,6 +107,7 @@ export default function ApplicationsClient({
             <option value="Rejected">Rejected</option>
             <option value="Offer">Offer</option>
           </select>
+          </div>
         </div>
 
         {/* Applications */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Cross, CrossIcon } from "lucide-react";
+import {  X } from "lucide-react";
 import { useState } from "react";
 
 export default function ApplicationForm({
@@ -72,17 +72,17 @@ export default function ApplicationForm({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xs p-4">
-      <div className="max-h-[70vh] w-full max-w-lg overflow-y-auto rounded-xl bg-slate-900 border-4 shadow-xl border-teal-600 p-6">
+      <div className="max-h-[70vh] w-full max-w-lg overflow-y-auto hide-scrollbar rounded-xl bg-slate-900 border-4 shadow-xl border-teal-600 p-6">
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-xl font-bold">
-            {isEditMode ? "Edit Application" : "Add Application"}
+            {isEditMode ? "Edit Job Application" : "Add Job Application"}
           </h2>
 
           <button
             onClick={onClose}
-            className="text-gray-500"
+            className="text-gray-500 cursor-pointer"
           >
-            <Cross/>
+           <X />
           </button>
         </div>
 
@@ -126,7 +126,7 @@ export default function ApplicationForm({
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full rounded-lg border p-3"
+            className="w-full rounded-lg bg-slate-900 border p-3"
           >
             <option value="Applied">Applied</option>
             <option value="Interview">Interview</option>
@@ -161,7 +161,7 @@ export default function ApplicationForm({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border px-4 py-2"
+              className="rounded-lg cursor-pointer border px-4 py-2"
             >
               Cancel
             </button>
@@ -169,7 +169,7 @@ export default function ApplicationForm({
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-black px-4 py-2 text-white"
+              className="rounded-lg cursor-pointer bg-black px-4 py-2 text-white"
             >
               {loading
                 ? "Saving..."
